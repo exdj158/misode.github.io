@@ -1671,7 +1671,7 @@ hr {
 
 .item-display > .item-glint,
 .item-display > .item-glint::after {
-	background: url(/images/glint.png) repeat;
+	background: url(/misode/images/glint.png) repeat;
 	filter: brightness(1.6) blur(1px) opacity(0.7);
 	animation: glint 20s linear 0s infinite;
 	background-size: 400%;
@@ -1721,7 +1721,7 @@ hr {
 .item-tooltip {
 	padding: 3px 1px 1px 3px;
 	border: solid 4px #220044;
-	border-image-source: url(/images/tooltip.png);
+	border-image-source: url(/misode/images/tooltip.png);
 	border-image-slice: 2 fill;
 	border-image-outset: 2px;
 	image-rendering: -moz-crisp-edges;

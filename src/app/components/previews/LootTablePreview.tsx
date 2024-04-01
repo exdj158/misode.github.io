@@ -26,7 +26,7 @@ export const LootTablePreview = ({ data }: PreviewProps) => {
 
 	return <>
 		<div ref={overlay} class="preview-overlay">
-			<img src="/images/container.png" alt="Container background" class="pixelated" draggable={false} />
+			<img src="/misode/images/container.png" alt="Container background" class="pixelated" draggable={false} />
 			{items.map(({ slot, item }) =>
 				<div key={slot} style={slotStyle(slot)}>
 					<ItemDisplay item={item} slotDecoration={true} advancedTooltip={advancedTooltips} />

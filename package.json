@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "pack": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx"
   },

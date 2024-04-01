@@ -84,7 +84,7 @@ export function getPath(url: string) {
 }
 
 export function getGenerator(url: string) {
-	const trimmedUrl = getPath(url).replace(/^\//, '').replace(/\/$/, '')
+	const trimmedUrl = getPath(url).replace(/^\//, '').replace(/\/$/, '').replace('misode/','')
 	return config.generators.find(g => g.url === trimmedUrl)
 }
 

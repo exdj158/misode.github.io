@@ -3,11 +3,9 @@ import { Identifier } from 'deepslate/core'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import { useVersion } from '../contexts/Version.jsx'
 import { useAsync } from '../hooks/useAsync.js'
-import { renderItem } from '../services/Resources.js'
 import { getCollections } from '../services/Schemas.js'
 import { ItemTooltip } from './ItemTooltip.jsx'
 import { Octicon } from './Octicon.jsx'
-import { itemHasGlint } from './previews/LootTable.js'
 
 interface Props {
 	item: ItemStack,
@@ -15,10 +13,37 @@ interface Props {
 	tooltip?: boolean,
 	advancedTooltip?: boolean,
 }
-export function ItemDisplay({ item, slotDecoration, tooltip, advancedTooltip }: Props) {
+export function ItemDisplay({ item:outerItem, slotDecoration, tooltip, advancedTooltip }: Props) {
+	const [item, setCloneItem] = useState(outerItem)
 	const el = useRef<HTMLDivElement>(null)
 	const [tooltipOffset, setTooltipOffset] = useState<[number, number]>([0, 0])
 	const [tooltipSwap, setTooltipSwap] = useState(false)
+
+	useEffect(()=>{
+		fetch(`http://localhost:8080/api/getMaterialInfo?namespace=${item.id.namespace}&id=${item.id.path}`).then(response => response.json())
+			.then(data => {
+				if(data){
+					const tmpItem = outerItem.clone()
+					if(data.maxDamage){
+						// @ts-ignore
+						tmpItem.getItem().durability = data.maxDamage
+					}
+					if(data.maxStackSize){
+						// @ts-ignore
+						tmpItem.getItem().stack = data.maxStackSize
+					}
+					if(data.localized){
+						// @ts-ignore
+						tmpItem.getItem().displayName = data.localized
+					}
+					if(data.icon){
+						// @ts-ignore
+						tmpItem.getItem().icon=data.icon
+					}
+					setCloneItem(tmpItem)
+				}
+			})
+	},[])
 
 	useEffect(() => {
 		const onMove = (e: MouseEvent) => {
@@ -60,13 +85,22 @@ export function ItemDisplay({ item, slotDecoration, tooltip, advancedTooltip }: 
 	</div>
 }
 
+function CustomItem({ item }: {item: ItemStack}){
+	// @ts-ignore
+	if(item.getItem().icon){
+		// @ts-ignore
+		return <img src={`http://localhost:8080/api/getMaterialImg?filePath=${encodeURIComponent(item.getItem().icon)}`} alt={item.id.toString()} class="model" draggable={false} />
+	}
+
+	return Octicon.package
+}
+
 function ItemItself({ item }: Props) {
 	const { version } = useVersion()
 
-	const hasGlint = itemHasGlint(item)
-
 	if (item.id.namespace !== Identifier.DEFAULT_NAMESPACE) {
-		return Octicon.package
+		// @ts-ignore
+		return <CustomItem item={item}/>
 	}
 
 	const { value: collections } = useAsync(() => getCollections(version), [])
@@ -75,26 +109,6 @@ function ItemItself({ item }: Props) {
 		return null
 	}
 
-	const modelPath = `item/${item.id.path}`
-	if (collections.get('model').includes('minecraft:' + modelPath)) {
-		return <RenderedItem item={item} hasGlint={hasGlint} />
-	}
-
-	return Octicon.package
-}
-
-function RenderedItem({ item, hasGlint }: Props & { hasGlint: boolean }) {
-	const { version } = useVersion()
-	const { value: src } = useAsync(() => renderItem(version, item), [version, item])
-
-	if (src) {
-		return <>
-			<img src={src} alt={item.id.toString()} class="model" draggable={false} />
-			{hasGlint && <div class="item-glint" style={{'--mask-image': `url("${src}")`}}></div>}
-		</>
-	}
-
-	return <div class="item-display">
-		{Octicon.package}
-	</div>
+	// @ts-ignore
+	return <CustomItem item={item}/>
 }

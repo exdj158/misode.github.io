@@ -8,6 +8,7 @@ const config = require('./src/config.json')
 const English = require('./src/locales/en.json')
 
 export default defineConfig({
+	base:'/misode/',
 	server: {
 		port: 3000,
 	},
@@ -20,7 +21,7 @@ export default defineConfig({
 		],
 	},
 	build: {
-		sourcemap: true,
+		sourcemap: false,
 		rollupOptions: {
 			plugins: [
 				html({

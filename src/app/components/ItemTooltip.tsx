@@ -44,6 +44,11 @@ export function ItemTooltip({ item, advanced }: Props) {
 			.map(word => word.charAt(0).toUpperCase() + word.slice(1))
 			.join(' ')
 	}
+	// @ts-ignore
+	if(item.getItem().displayName){
+		// @ts-ignore
+		name = item.getItem().displayName
+	}
 	const lore: any[] = []
 	item.tag.getCompound('display').getList('Lore', NbtType.String).forEach((line) => {
 		try {

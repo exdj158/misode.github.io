@@ -25,7 +25,7 @@ export function Transformation({}: Props) {
 	useTitle(locale('title.transformation'))
 
 	const { value: cubeTexture } = useAsync(async () => {
-		const img = await loadImage('/images/cube.png')
+		const img = await loadImage('/misode/images/cube.png')
 		const canvas = document.createElement('canvas')
 		canvas.width = 64
 		canvas.height = 64

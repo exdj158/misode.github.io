@@ -5,12 +5,16 @@ import '../styles/global.css'
 import '../styles/nodes.css'
 import { Analytics } from './Analytics.js'
 import { Header } from './components/index.js'
-import { TextComponent } from './components/TextComponent.jsx'
 import { Changelog, Customized, Generator, Generators, Guide, Guides, Home, LegacyPartners, Partners, Sounds, Transformation, Versions, WhatsNew, Worldgen } from './pages/index.js'
 import { cleanUrl } from './Utils.js'
 
 const DEMO_KEY = 'misode_demo_2024'
 const DEMO_INITIAL_SECONDS = 300
+
+export const ROUTER_PREFIX = '/misode/'
+export function urlPath(path: string) {
+	return ROUTER_PREFIX + path.replace(/^\//, '')
+}
 
 export function App() {
 	const changeRoute = (e: RouterOnChangeArgs) => {
@@ -49,22 +53,22 @@ export function App() {
 	return <>
 		<Header />
 		<Router onChange={changeRoute}>
-			<Home path="/" />
-			<Generators path="/generators" />
-			<Worldgen path="/worldgen" />
-			<Partners path="/partners" />
-			<LegacyPartners path="/partners/:id" />
-			<Sounds path="/sounds" />
-			<Changelog path="/changelog" />
-			<Versions path="/versions" />
-			<Transformation path="/transformation" />
-			<Customized path="/customized" />
-			<WhatsNew path="/whats-new" />
-			<Guides path="/guides" />
-			<Guide path="/guides/:id" />
+			<Home path={urlPath('/')} />
+			<Generators path={urlPath('/generators')} />
+			<Worldgen path={urlPath('/worldgen')} />
+			<Partners path={urlPath('/partners')} />
+			<LegacyPartners path={urlPath('/partners/:id')} />
+			<Sounds path={urlPath('/sounds')} />
+			<Changelog path={urlPath('/changelog')} />
+			<Versions path={urlPath('/versions')} />
+			<Transformation path={urlPath('/transformation')} />
+			<Customized path={urlPath('/customized')} />
+			<WhatsNew path={urlPath('/whats-new')} />
+			<Guides path={urlPath('/guides')} />
+			<Guide path={urlPath('/guides/:id')} />
 			<Generator default />
 		</Router>
-		<div class={`fixed z-[10000] ${demoTimer > 0 ? 'bottom-1' : 'top-1/2 -translate-y-1/2'} left-1/2 -translate-x-1/2 max-w-[100vw]`}>
+		{/* <div class={`fixed z-[10000] ${demoTimer > 0 ? 'bottom-1' : 'top-1/2 -translate-y-1/2'} left-1/2 -translate-x-1/2 max-w-[100vw]`}>
 			<div class={`${demoTimer > 0 ? 'px-2 py-1' : 'p-6'} flex flex-col 	items-center item-tooltip ${0 < demoTimer && demoTimer < 60 ? 'motion-safe:animate-bounce' : ''} `}>
 				{demoTimer > 0 ? <>
 					<TextComponent component={{ text: 'This is a demo version!', color: 'yellow' }} />
@@ -77,6 +81,6 @@ export function App() {
 					</div>
 				</>}
 			</div>
-		</div>
+		</div> */}
 	</>
 }

@@ -37,13 +37,13 @@ export const RecipePreview = ({ data }: PreviewProps) => {
 	const gui = useMemo(() => {
 		const type = recipe.type?.replace(/^minecraft:/, '')
 		if (type === 'smelting' || type === 'blasting' || type === 'smoking' || type === 'campfire_cooking') {
-			return '/images/furnace.png'
+			return '/misode/images/furnace.png'
 		} else if (type === 'stonecutting') {
-			return '/images/stonecutter.png'
+			return '/misode/images/stonecutter.png'
 		} else if (type === 'smithing_transform' || type === 'smithing_trim') {
-			return '/images/smithing.png'
+			return '/misode/images/smithing.png'
 		} else {
-			return '/images/crafting_table.png'
+			return '/misode/images/crafting_table.png'
 		}
 	}, [state])
 

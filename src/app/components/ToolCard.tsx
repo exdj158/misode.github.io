@@ -10,7 +10,7 @@ interface Props {
 }
 export function ToolCard({ title, desc, link, icon, titleIcon }: Props) {
 	if (icon || desc) {
-		return <a class="tool-card" href={link}>
+		return <a class="tool-card" href={'/misode' + link}>
 			{icon && Icons[icon]}
 			<div>
 				<ToolHead title={title} titleIcon={titleIcon} />
@@ -19,7 +19,7 @@ export function ToolCard({ title, desc, link, icon, titleIcon }: Props) {
 		</a>
 	}
 
-	return <a class="tool-card" href={link}>
+	return <a class="tool-card" href={'/misode' + link}>
 		<ToolHead title={title} titleIcon={titleIcon} />
 	</a>
 }
